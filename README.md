@@ -1,3 +1,7 @@
+## Live Demo
+
+https://weather-prediction-e4bi.onrender.com
+
 # Weather Prediction Web Application 
 
 A Django-based weather forecasting web application that predicts weather conditions using Machine Learning and the OpenWeather API.
