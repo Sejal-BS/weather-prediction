@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor #mode
 from sklearn.metrics import mean_squared_error #to measure the accuracy of our predictions
 from datetime import datetime, timedelta #to handle date and time
 import pytz
-import os
+
 import os
 from dotenv import load_dotenv
 
