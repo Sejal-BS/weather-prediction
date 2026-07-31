@@ -9,6 +9,7 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor #mode
 from sklearn.metrics import mean_squared_error #to measure the accuracy of our predictions
 from datetime import datetime, timedelta #to handle date and time
 import pytz
+from pathlib import Path
 
 import os
 from dotenv import load_dotenv
@@ -106,8 +107,8 @@ def weather_view(request):
         current_weather = get_current_weather(city, API_KEY, BASE_URL)
 
         #load historical data
-        BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        csv_path = os.path.join(BASE_DIR, "weather.csv")
+        BASE_DIR = Path(__file__).resolve().parent.parent.parent
+        csv_path = BASE_DIR / "weather.csv"
         historical_data = read_historical_data(csv_path)
 
         #prepare and train the rain prediction model
