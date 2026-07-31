@@ -24,6 +24,7 @@ def get_current_weather(city, api_key, base_url):
   url = f"{base_url}weather?q={city}&appid={api_key}&units=metric" #construct the API request URL
   response = requests.get(url) #send the get request to API (OpenWeather)
   data = response.json() #converts raw response into json object
+  print(data)
   return {
       'city': data['name'],
       'current_temp': round(data['main']['temp']), #access part of response that contains temp data
