@@ -1,4 +1,4 @@
-# Weather Prediction Web Application 🌦️
+# Weather Prediction Web Application 
 
 A Django-based weather forecasting web application that predicts weather conditions using Machine Learning and the OpenWeather API.
 
@@ -56,10 +56,6 @@ weatherProject/
 ├── requirements.txt
 └── .env
 ```
-
-## Screenshots
-
-(Add screenshots here after deployment.)
 
 ## Author
 
