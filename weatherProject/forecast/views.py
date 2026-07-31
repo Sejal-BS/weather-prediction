@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor #mode
 from sklearn.metrics import mean_squared_error #to measure the accuracy of our predictions
 from datetime import datetime, timedelta #to handle date and time
 import pytz
-from pathlib import Path
+from django.conf import settings
 
 import os
 from dotenv import load_dotenv
@@ -18,12 +18,19 @@ load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
 
+if not API_KEY:
+    raise Exception("API_KEY missing. Check .env file")
+
 BASE_URL = 'https://api.openweathermap.org/data/2.5/' #base URL for API
 
 #1. Fetch Current Weather Data
 def get_current_weather(city, api_key, base_url):
   url = f"{base_url}weather?q={city}&appid={api_key}&units=metric" #construct the API request URL
   response = requests.get(url) #send the get request to API (OpenWeather)
+
+  if response.status_code != 200:
+    raise Exception("Weather API failed")
+
   data = response.json() #converts raw response into json object
   print("API_KEY:", api_key)
   print("Response:", data)
@@ -107,8 +114,7 @@ def weather_view(request):
         current_weather = get_current_weather(city, API_KEY, BASE_URL)
 
         #load historical data
-        BASE_DIR = Path(__file__).resolve().parent.parent.parent
-        csv_path = BASE_DIR / "weather.csv"
+        csv_path = settings.BASE_DIR / "weather.csv"
         historical_data = read_historical_data(csv_path)
 
         #prepare and train the rain prediction model
@@ -161,7 +167,7 @@ def weather_view(request):
         future_humidity = predict_future(hum_model, current_weather['humidity'])
 
         #prepare time for future predictions
-        timezone = pytz.timezone('Asia/Karachi')
+        timezone = pytz.timezone('Asia/Kolkata')
         now = datetime.now(timezone)
         next_hour = now + timedelta(hours=1)
         next_hour = next_hour.replace(minute=0, second=0, microsecond=0)
