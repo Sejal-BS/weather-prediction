@@ -2,18 +2,24 @@
 myenv/
 venv/
 
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
 
-# VS Code settings
-.vscode/
-
-# Django database
+# Database
 db.sqlite3
-
-# Static files generated during deployment
-staticfiles/
 
 # Environment variables
 .env
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+*.log

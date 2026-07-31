@@ -10,8 +10,13 @@ from sklearn.metrics import mean_squared_error #to measure the accuracy of our p
 from datetime import datetime, timedelta #to handle date and time
 import pytz
 import os
+import os
+from dotenv import load_dotenv
 
-API_KEY = 'c5e4600c13fb167fec6c6acffdfd7d97' #our API_Key
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
+
 BASE_URL = 'https://api.openweathermap.org/data/2.5/' #base URL for API
 
 #1. Fetch Current Weather Data
