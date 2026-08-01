@@ -168,7 +168,7 @@ def weather_view(request):
         future_humidity = predict_future(hum_model, current_weather['humidity'])
 
         #prepare time for future predictions
-        timezone = pytz.timezone('Asia/Kolkata')
+        timezone = pytz.timezone('Asia/Karachi')
         now = datetime.now(timezone)
         next_hour = now + timedelta(hours=1)
         next_hour = next_hour.replace(minute=0, second=0, microsecond=0)
