@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error #to measure the accuracy of our p
 from datetime import datetime, timedelta #to handle date and time
 import pytz
 from pathlib import Path
+from datetime import timezone
 
 import os
 from dotenv import load_dotenv
@@ -50,6 +51,8 @@ def get_current_weather(city, api_key, base_url):
       'clouds' : data['clouds']['all'],
 
       'Visibility' : data['visibility'],
+
+      'timezone': data['timezone']
   }
 
 
@@ -168,9 +171,12 @@ def weather_view(request):
         future_humidity = predict_future(hum_model, current_weather['humidity'])
 
         #prepare time for future predictions
-        timezone = pytz.timezone('Asia/Karachi')
-        now = datetime.now(timezone)
-        next_hour = now + timedelta(hours=1)
+        
+        utc_now = datetime.now(timezone.utc)
+
+        city_time = utc_now + timedelta(seconds=current_weather['timezone'])
+
+        next_hour = city_time + timedelta(hours=1)
         next_hour = next_hour.replace(minute=0, second=0, microsecond=0)
 
         future_times = [(next_hour + timedelta(hours=i)).strftime("%H:00") for i in range(5)]
@@ -193,8 +199,8 @@ def weather_view(request):
             'city' : current_weather['city'],
             'country' : current_weather['country'],
 
-            'time' : datetime.now(),
-            'date' : datetime.now().strftime("%B %d, %Y "),
+            'time': now,
+            'date': now.strftime("%B %d, %Y"),
 
             'wind' : current_weather['Wind_Gust_Speed'],
             'pressure' : current_weather['pressure'],
