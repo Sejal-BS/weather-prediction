@@ -199,8 +199,8 @@ def weather_view(request):
             'city' : current_weather['city'],
             'country' : current_weather['country'],
 
-            'time': now,
-            'date': now.strftime("%B %d, %Y"),
+            'time': city_time,
+            'date': city_time.strftime("%B %d, %Y"),
 
             'wind' : current_weather['Wind_Gust_Speed'],
             'pressure' : current_weather['pressure'],
